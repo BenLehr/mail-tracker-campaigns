@@ -113,18 +113,6 @@ You may want to do additional processing on these events, so an event is fired i
     - Public attribute `sent_email` contains the `SentEmail` model
     - Public attribute `ip_address` contains the IP address that was used to trigger the event
 
-If you are using the Amazon SNS notification system, these events are fired so you can do additional processing.
-
--   benlehr\MailTracker\Events\EmailDeliveredEvent (when you received a "message delivered" event, you may want to mark the email as "good" or "delivered" in your database)
-    - Public attribute `sent_email` contains the `SentEmail` model
-    - Public attribute `email_address` contains the specific address that was used to trigger the event
--   benlehr\MailTracker\Events\ComplaintMessageEvent (when you received a complaint, ex: marked as "spam", you may want to remove the email from your database)
-    - Public attribute `sent_email` contains the `SentEmail` model
-    - Public attribute `email_address` contains the specific address that was used to trigger the event
--   benlehr\MailTracker\Events\PermanentBouncedMessageEvent (when you receive a permanent bounce, you may want to mark the email as bad or remove it from your database)
-    benlehr\MailTracker\Events\TransientBouncedMessageEvent (when you receive a transient bounce.  Check the event's public attributes for `bounce_sub_type` and `diagnostic_code` to determine if you want to do additional processing when this event is received.)
-    - Public attribute `sent_email` contains the `SentEmail` model
-    - Public attribute `email_address` contains the specific address that was used to trigger the event
 
 To install an event listener, you will want to create a file like the following:
 
