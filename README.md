@@ -1,46 +1,15 @@
-# MailTracker
+# MailTracker with Campaigns
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
 [![Total Downloads][ico-downloads]][link-downloads]
-[![Travis][ico-travis]][link-travis]
 
-MailTracker will hook into all outgoing emails from Laravel and inject a tracking code into it. It will also store the rendered email in the database. There is also an interface to view sent emails.
+This package is a extension of J David Baker's MailTracker Package.
 
-## NOTE: For Laravel < 5.3.23 you MUST use version 2.0 or earlier.
 
-## Upgrade from 4.x to 5.x
+MailTracker will hook into all outgoing trackable emails from Laravel and inject a tracking code into it. It will also store the rendered email in the database. There is also an interface to view sent emails.
 
-In 4.x and previous, there was a `recipient` column in the sent_emails table that stored the RFC standard email format `<Name> email@example.com`. 5.x has updated to store the name and email separately. The `recipient` and `sender` columns have been removed from the `sent_emails` table migration, but no migration was added to drop those columns. Accessors have been added to retain the model's `recipient` and `sender` attributes, so no updates should need to be made to any code that currently uses those unless you are specifically querying the `sender` or `recipient` columns.
 
-To retain your existing data afer upgrading, run the artisan command `mail-tracker:migrate-recipients`. This will convert the existing `recipient` and `sender` data into the new format. At this point you may drop the `recipient` and `sender` columns.
-
-There is also a new pair of attributes in the `sent_emails` table: `opened_at` and `clicked_at`. Those store the first time the user opened and clicked, respectively. This has been added to the default tracker index page. You are welcome to add it into yours, or use those values as you see fit.
-
-## Upgrade from 3.x to 4.x
-
-There are no breaking changes from 3.x to 4.x with the exception that 4.x is for Laravel 7+ only.
-
-## Upgrade from 2.x to 3.x
-
-There was a breaking change with the update to version 3.0, specifically regarding the events that are fired. If you are listening for the `PermanentBouncedMessageEvent` to catch all undeliverables, there are now two separate events: `PermanentBouncedMessageEvent` will be fired _only_ on permanent bounces, and a new event `ComplaintMessageEvent` will be fired on complaints. There is also an new event `EmailDeliveredEvent` that is fired for each successful delivery event. For information about setting up the SES/SNS environment to receive notifications regarding these events, see the documentation below.
-
-## Upgrade from 2.0 or earlier
-
-First, upgrade to version 2.2 by running:
-
-```bash
-$ composer require benlehr/mail-tracker ~2.2
-```
-
-If you are updating from an earlier version, you will need to update the config file and run the new migrations. For best results, make a backup copy of config/mail-tracker.php and the views in resources/views/vendor/emailTrackingViews (if they exists) to restore any values you have customized, then delete that file and run
-
-```bash
-$ php artisan vendor:publish
-$ php artisan migrate
-```
-
-Also note that the migration for the `sent_emails_url_clicked` table changed with version 2.1.13. The change is that the URL column is now a `TEXT` field to allow for longer URLs. If you have an old system you may want to manually change that column; there is no migration included to perform that update.
 
 ## Install
 
@@ -78,7 +47,10 @@ public function boot()
 
 ## Usage
 
-Once installed, all outgoing mail will be logged to the database. The following config options are available in config/mail-tracker.php:
+Once installed, you can create Trackable Mails with a command, this mails will be logged to the database.
+
+
+The following config options are available in config/mail-tracker.php:
 
 -   **name**: set your App Name.
 -   **inject-pixel**: set to true to inject a tracking pixel into all outgoing html emails.
@@ -90,13 +62,34 @@ Once installed, all outgoing mail will be logged to the database. The following 
 -   **date-format**: You can define the format to show dates in the Admin Panel.
 -   **content-max-size**: You can overwrite default maximum length limit for `content` database field. Do not forget update it's type from `text` if you need to make it longer.
 
-If you do not wish to have an email tracked, then you can add the `X-No-Track` header to your message. Put any random string into this header to prevent the tracking from occurring. The header will be removed from the email prior to being sent.
+If you wish to have an email tracked in a campaign, then you have to create a new Trackable Mail with the command:
+
+```
+php artisan make:trackable-mail 'MailName'
+```
+
+When you send the email you have to create the campaign with the campaign helper which returns you the campaign id. The ID has to be injected into the email as parameter.
+
+
 
 ```php
-\Mail::send('email.test', [], function ($message) {
-    // ... other settings here
-    $message->getHeaders()->addTextHeader('X-No-Track',Str::random(10));
-});
+
+use benlehr\mail-tracker\MailCampaignHelper
+
+// get the helper 
+$helper = new MailCampaignHelper();
+// create a campaign and get ID
+$campaignId = $helper->createCampaign('name of campaign');
+
+// fetch your users
+$users = User::all();
+
+foreach ($users as $user) {
+    // send mail and inject campaign id
+  Mail::to($user->email)->send(new TestMail($campaignId));
+}
+
+
 ```
 
 ## Note on dev testing
@@ -230,48 +223,12 @@ protected $listen = [
 ];
 ```
 
-### Passing data to the event listeners
-
-Often times you may need to link a sent email to another model. The best way to handle this is to add a header to your outgoing email that you can retrieve in your event listener. Here is an example:
-
-```php
-/**
- * Send an email and do processing on a model with the email
- */
-\Mail::send('email.test', [], function ($message) use($email, $subject, $name, $model) {
-    $message->from('from@johndoe.com', 'From Name');
-    $message->sender('sender@johndoe.com', 'Sender Name');
-    $message->to($email, $name);
-    $message->subject($subject);
-
-    // Create a custom header that we can later retrieve
-    $message->getHeaders()->addTextHeader('X-Model-ID',$model->id);
-});
-```
-
-and then in your event listener:
-
-```
-public function handle(EmailSentEvent $event)
-{
-    $tracker = $event->sent_email;
-    $model_id = $event->sent_email->getHeader('X-Model-ID');
-    $model = Model::find($model_id);
-    // Perform your tracking/linking tasks on $model knowing the SentEmail object
-}
-```
-
-Note that the headers you are attaching to the email are actually going out with the message, so do not store any data that you wouldn't want to expose to your email recipients.
 
 ## Exceptions
 
 The following exceptions may be thrown. You may add them to your ignore list in your exception handler, or handle them as you wish.
 
 -   benlehr\MailTracker\Exceptions\BadUrlLink - Something went wrong with the url link. Basically, the system could not properly parse the URL link to send the redirect to.
-
-## Amazon SES features
-
-If you use Amazon SES, you can add some additional information to your tracking. To set up the SES callbacks, first set up SES notifications under your domain in the SES control panel. Then subscribe to the topic by going to the admin panel of the notification topic and creating a subscription for the URL you copied from the admin page. The system should immediately respond to the subscription request. If you like, you can use multiple subscriptions (i.e. one for delivery, one for bounces). See above for events that are fired on a failed message. **For added security, it is recommended to set the topic ARN into the mail-tracker config.**
 
 ## Views
 
@@ -291,11 +248,12 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details
 
 ## Security
 
-If you discover any security related issues, please email me@jdavidbaker.com instead of using the issue tracker.
+If you discover any security related issues, please email benlehr@trio-group.de instead of using the issue tracker.
 
 ## Credits
 
--   [J David Baker][link-author]
+-   [Benjamin Lehr][link-author]
+-   [J David Baker][link-fork]
 -   [All Contributors][link-contributors]
 
 ## License
@@ -314,4 +272,5 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-code-quality]: https://scrutinizer-ci.com/g/benlehr/MailTracker
 [link-downloads]: https://packagist.org/packages/benlehr/mail-tracker
 [link-author]: https://github.com/benlehr
+[link-fork]: https://github.com/jdavidbaker
 [link-contributors]: ../../contributors
