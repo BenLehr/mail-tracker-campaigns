@@ -7,21 +7,20 @@
             </div>
         </div>
 
-
         <div class="row">
             <div class="col-sm-12">
                 <table class="table table-striped">
                     <tr>
-                        <th>SMTP</th>
-                        <th>Recipient</th>
-                        <th>Subject</th>
-                        <th>First View</th>
-                        <th>Opens</th>
-                        <th>First Click</th>
-                        <th>Clicks</th>
-                        <th>Sent At</th>
-                        <th>View Email</th>
-                        <th>Click Report</th>
+                        <th>{{ __('vendor.mail-tracker.detail.smtp') }}</th>
+                        <th>{{ __('vendor.mail-tracker.detail.recipient') }}</th>
+                        <th>{{ __('vendor.mail-tracker.detail.subject') }}</th>
+                        <th>{{ __('vendor.mail-tracker.detail.first-view') }}</th>
+                        <th>{{ __('vendor.mail-tracker.detail.opens') }}</th>
+                        <th>{{ __('vendor.mail-tracker.detail.first-click') }}</th>
+                        <th>{{ __('vendor.mail-tracker.detail.clicks') }}</th>
+                        <th>{{ __('vendor.mail-tracker.detail.sent-at') }}</th>
+                        <th>{{ __('vendor.mail-tracker.detail.view-email') }}</th>
+                        <th>{{ __('vendor.mail-tracker.detail.click-report') }}</th>
                     </tr>
                     @foreach($emails as $email)
                         <tr class="{{ $email->report_class }}">

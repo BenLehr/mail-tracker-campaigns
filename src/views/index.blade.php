@@ -11,12 +11,12 @@
             <div class="col-sm-12">
                 <table class="table table-striped">
                     <tr>
-                        <th>ID</th>
-                        <th>Datum</th>
-                        <th>Name</th>
-                        <th>Empfänger</th>
-                        <th>Geöffnet</th>
-                        <th>Öffnungsrate</th>
+                        <th>{{ __('vendor.mail-tracker.index.id') }}</th>
+                        <th>{{ __('vendor.mail-tracker.index.date') }}</th>
+                        <th>{{ __('vendor.mail-tracker.index.name') }}</th>
+                        <th>{{ __('vendor.mail-tracker.index.receivers') }}</th>
+                        <th>{{ __('vendor.mail-tracker.index.openings') }}</th>
+                        <th>{{ __('vendor.mail-tracker.index.opening-rate') }}</th>
                         <th>&nbsp;</th>
                     </tr>
                     @foreach($campaigns as $campaign)

@@ -55,6 +55,16 @@ class MailTrackerServiceProvider extends ServiceProvider
         //
     }
 
+
+    protected function publishTranslations()
+    {
+        $this->loadTranslationsFrom(__DIR__.'/../lang', 'mail-tracker');
+
+        $this->publishes([
+            __DIR__.'/../lang' => $this->app->langPath('vendor/mail-tracker'),
+        ]);
+    }
+
     /**
      * Publish the configuration files
      *
