@@ -21,6 +21,7 @@ class SentEmail extends Model
     protected $fillable = [
         'hash',
         'headers',
+        'campaign_id',
         'sender_name',
         'sender_email',
         'recipient_name',

@@ -12,7 +12,7 @@ class MailCampaignHelper
     public function createCampaign($name)
     {
         $campaign = new EmailCampaign();
-        $campaign->name = $name . Carbon::now()->format('Y-m-d');
+        $campaign->name = $name . ' | ' . Carbon::now()->format('Y-m-d');
         $campaign->date = Carbon::now();
         $campaign->save();
 

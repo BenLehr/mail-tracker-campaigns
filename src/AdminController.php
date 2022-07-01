@@ -69,7 +69,8 @@ class AdminController extends Controller
     public function getIndex()
     {
         session(['mail-tracker-index-page' => request()->page]);
-        $campaigns = EmailCampaign::all()->paginate(config('mail-tracker.emails-per-page'));
+
+        $campaigns = EmailCampaign::paginate(config('mail-tracker.emails-per-page'));
 
 
         return \View('emailTrakingViews::index')->with('campaigns', $campaigns);
@@ -80,7 +81,7 @@ class AdminController extends Controller
         $campaign = EmailCampaign::find($id);
         $emails = $campaign->emails;
 
-        return \View('emailTrakingViews::index')->with('emails', $emails);
+        return \View('emailTrakingViews::detail')->with('emails', $emails);
     }
 
 
