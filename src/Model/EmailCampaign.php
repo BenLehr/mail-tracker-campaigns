@@ -32,7 +32,7 @@ class EmailCampaign extends Model
 
     public function openingRate()
     {
-        return $this->emailsOpened() != 0 ? $this->emailsOpened() / $this->emailsSend()->count() * 100 : 0;
+        return $this->emailsOpened() != 0 ? $this->emailsOpened() / $this->emailsSend() * 100 : 0;
     }
 
     public function emailsSend()
