@@ -89,6 +89,7 @@ class MailTrackerServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Console\MigrateRecipients::class,
+                Console\MakeTrackableMail::class,
             ]);
         }
     }

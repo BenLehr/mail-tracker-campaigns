@@ -1,0 +1,46 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+use benlehr\MailTracker\TrackableMail;
+
+/**
+ * Class DummyClass
+ * @package DummyNamespace
+ */
+class {{ class }} extends TrackableMail implements ShouldQueue
+{
+
+    use Queueable, SerializesModels;
+
+    public $campaignId;
+
+    /**
+     * Create a new message instance.
+     *
+     */
+    public function __construct($campaignId = NULL)
+    {
+        parent::__construct($campaignId);
+    }
+
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        parent::build();
+
+        $this->view('view.name');
+
+        return $this;
+    }
+
+}
