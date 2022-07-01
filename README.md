@@ -16,7 +16,7 @@ MailTracker will hook into all outgoing trackable emails from Laravel and inject
 Via Composer
 
 ```bash
-$ composer require benlehr/mail-tracker
+$ composer require benlehr/mail-campaign-tracker
 ```
 
 Publish the config file and migration

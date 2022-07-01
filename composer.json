@@ -1,5 +1,5 @@
 {
-    "name": "benlehr/mailcampaign-tracker",
+    "name": "benlehr/mail-campaign-tracker",
     "type": "library",
     "description": "Logs and tracks all outgoing emails from Laravel",
     "keywords": [
