@@ -34,6 +34,7 @@ class MailTrackerServiceProvider extends ServiceProvider
         // Publish pieces
         $this->publishConfig();
         $this->publishViews();
+        $this->publishTranslations();
 
         // Register console commands
         $this->registerCommands();
@@ -61,7 +62,7 @@ class MailTrackerServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../lang', 'mail-tracker');
 
         $this->publishes([
-            __DIR__.'/../lang' => $this->app->langPath('vendor/mail-tracker'),
+            __DIR__.'/../lang' => $this->app->langPath('mail-tracker'),
         ]);
     }
 
