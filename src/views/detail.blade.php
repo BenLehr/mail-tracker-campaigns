@@ -11,16 +11,16 @@
             <div class="col-sm-12">
                 <table class="table table-striped">
                     <tr>
-                        <th>{{ __('vendor.mail-tracker.detail.smtp') }}</th>
-                        <th>{{ __('vendor.mail-tracker.detail.recipient') }}</th>
-                        <th>{{ __('vendor.mail-tracker.detail.subject') }}</th>
-                        <th>{{ __('vendor.mail-tracker.detail.first-view') }}</th>
-                        <th>{{ __('vendor.mail-tracker.detail.opens') }}</th>
-                        <th>{{ __('vendor.mail-tracker.detail.first-click') }}</th>
-                        <th>{{ __('vendor.mail-tracker.detail.clicks') }}</th>
-                        <th>{{ __('vendor.mail-tracker.detail.sent-at') }}</th>
-                        <th>{{ __('vendor.mail-tracker.detail.view-email') }}</th>
-                        <th>{{ __('vendor.mail-tracker.detail.click-report') }}</th>
+                        <th>{{ __('mail-tracker.detail.smtp') }}</th>
+                        <th>{{ __('mail-tracker.detail.recipient') }}</th>
+                        <th>{{ __('mail-tracker.detail.subject') }}</th>
+                        <th>{{ __('mail-tracker.detail.first-view') }}</th>
+                        <th>{{ __('mail-tracker.detail.opens') }}</th>
+                        <th>{{ __('mail-tracker.detail.first-click') }}</th>
+                        <th>{{ __('mail-tracker.detail.clicks') }}</th>
+                        <th>{{ __('mail-tracker.detail.sent-at') }}</th>
+                        <th>{{ __('mail-tracker.detail.view-email') }}</th>
+                        <th>{{ __('mail-tracker.detail.click-report') }}</th>
                     </tr>
                     @foreach($emails as $email)
                         <tr class="{{ $email->report_class }}">
