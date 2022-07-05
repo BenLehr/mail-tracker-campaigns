@@ -4,10 +4,14 @@
 [![Software License][ico-license]](LICENSE.md)
 [![Total Downloads][ico-downloads]][link-downloads]
 
-This package is a extension of J David Baker's MailTracker Package.
+This package is a extension of  [J David Baker's MailTracker Package][link-fork].
 
 
-MailTracker will hook into all outgoing trackable emails from Laravel and inject a tracking code into it. It will also store the rendered email in the database. There is also an interface to view sent emails.
+With Mail Campaign Tracker you can create Trackable Emails and Campaigns.
+
+MailTracker will hook into all outgoing trackable emails from Laravel and inject a tracking code into it. 
+
+It will also store the rendered email in the database. There is also an interface to view sent emails.
 
 
 
@@ -74,7 +78,7 @@ When you send the email you have to create the campaign with the campaign helper
 
 ```php
 
-use benlehr\mail-tracker\MailCampaignHelper
+use benlehr\mail-tracker\MailCampaignHelper;
 
 // get the helper 
 $helper = new MailCampaignHelper();
@@ -240,7 +244,7 @@ If you discover any security related issues, please email benlehr@trio-group.de 
 
 ## Credits
 
--   [Benjamin Lehr][link-author]
+-   [Ben Lehr][link-author]
 -   [J David Baker][link-fork]
 -   [All Contributors][link-contributors]
 
@@ -248,17 +252,17 @@ If you discover any security related issues, please email benlehr@trio-group.de 
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/benlehr/mail-tracker.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/benlehr/mail-campaign-tracker.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/benlehr/mail-tracker/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/benlehr/MailTracker.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/benlehr/MailTracker.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/benlehr/mail-tracker.svg?style=flat-square
-[link-packagist]: https://packagist.org/packages/benlehr/mail-tracker
-[link-travis]: https://travis-ci.com/benlehr/mail-tracker
+[ico-travis]: https://img.shields.io/travis/benlehr/mail-campaign-tracker/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/benlehr/mail-campaign-tracker.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/benlehr/mail-campaign-tracker.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/benlehr/mail-campaign-tracker.svg?style=flat-square
+[link-packagist]: https://packagist.org/packages/benlehr/mail-campaign-tracker
+[link-travis]: https://travis-ci.com/benlehr/mail-campaign-tracker
 [link-scrutinizer]: https://scrutinizer-ci.com/g/benlehr/MailTracker/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/benlehr/MailTracker
-[link-downloads]: https://packagist.org/packages/benlehr/mail-tracker
+[link-downloads]: https://packagist.org/packages/benlehr/mail-campaign-tracker
 [link-author]: https://github.com/benlehr
 [link-fork]: https://github.com/jdavidbaker
 [link-contributors]: ../../contributors
