@@ -62,7 +62,7 @@ class MailTrackerServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../lang', 'mail-tracker');
 
         $this->publishes([
-            __DIR__.'/../lang' => $this->app->langPath('mail-tracker'),
+            __DIR__.'/lang' => resource_path('lang/mail-tracker'),
         ]);
     }
 
